@@ -33,4 +33,11 @@ sim_flags_dict = {
       # New winds with Muller Mandel remnants
     "NewWinds_RemMullerMandel": "--OB-mass-loss VINK2021 --VMS-mass-loss SABHAHIT2023 --RSG-mass-loss DECIN2023  --WR-mass-loss SANDERVINK2023 \
  --remnant-mass-prescription MULLERMANDEL --kick-magnitude-distribution MULLERMANDEL ",
+       # New winds with Fryer remnants and no BH kick
+    "NewWinds_RemFryer2012_noBHkick": "--OB-mass-loss VINK2021 --VMS-mass-loss SABHAHIT2023 --RSG-mass-loss DECIN2023  --WR-mass-loss SANDERVINK2023 \
+  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN \
+ --black-hole-kicks ZERO --kick-magnitude-sigma-CCSN-BH 0 --natal-kick-for-PPISN FALSE ",
+       # New winds with Fryer remnants and no NS or BH kick
+    "NewWinds_RemFryer2012_noNSBHkick": "--OB-mass-loss VINK2021 --VMS-mass-loss SABHAHIT2023 --RSG-mass-loss DECIN2023  --WR-mass-loss SANDERVINK2023 \
+  --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO ",
 }
