@@ -13,7 +13,7 @@ sim_flags_dict = {
       # no BH kick
     "OldWinds_RemFryer2012_noBHkick": "--mass-loss-prescription BELCZYNSKI2010 --OB-mass-loss VINK2001 --VMS-mass-loss VINK2011 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN \
- --black-hole-kicks ZERO ",
+ --black-hole-kicks ZERO --kick-magnitude-sigma-CCSN-BH 0 --natal-kick-for-PPISN FALSE ",
       # no NS or BH kick
     "OldWinds_RemFryer2012_noNSBHkick": "--mass-loss-prescription BELCZYNSKI2010 --OB-mass-loss VINK2001 --VMS-mass-loss VINK2011 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
  --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO ",
