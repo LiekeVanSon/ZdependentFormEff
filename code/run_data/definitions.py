@@ -16,16 +16,14 @@ sim_flags_dict = {
  --black-hole-kicks ZERO ",
       # no NS or BH kick
     "OldWinds_RemFryer2012_noNSBHkick": "--mass-loss-prescription BELCZYNSKI2010 --OB-mass-loss VINK2001 --VMS-mass-loss VINK2011 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
- --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN \
- --black-hole-kicks ZERO --kick-magnitude-distribution ZERO ",
+ --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO ",
       # NO main sequence mass loss
-    "OldWinds_RemFryer2012_noMSwinds": "--mass-loss-prescription BELCZYNSKI2010 --OB-mass-loss VINK2001 --VMS-mass-loss VINK2011 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
+    "OldWinds_RemFryer2012_noMSwinds": "--mass-loss-prescription BELCZYNSKI2010 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN \
- --OB-mass-loss NONE --VMS-mass-loss VINK2011 ",
+ --OB-mass-loss NONE --VMS-mass-loss NONE ",
       # NO WR winds
     "OldWinds_RemFryer2012_noWRwinds": "--mass-loss-prescription BELCZYNSKI2010 --OB-mass-loss VINK2001 --VMS-mass-loss VINK2011 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
- --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN \
- --wolf-rayet-multiplier 0 ",
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN --wolf-rayet-multiplier 0 ",
       # NO winds
     "OldWinds_RemFryer2012_NOwinds": "--mass-loss-prescription BELCZYNSKI2010 --overall-wind-mass-loss-multiplier 0 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN ",
