@@ -16,7 +16,7 @@ sim_flags_dict = {
  --black-hole-kicks ZERO --kick-magnitude-sigma-CCSN-BH 0 --natal-kick-for-PPISN FALSE ",
       # no NS or BH kick
     "OldWinds_RemFryer2012_noNSBHkick": "--mass-loss-prescription BELCZYNSKI2010 --OB-mass-loss VINK2001 --VMS-mass-loss VINK2011 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
- --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO ",
+ --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO --kick-magnitude-sigma-ECSN 0.0 ",
       # NO main sequence mass loss
     "OldWinds_RemFryer2012_noMSwinds": "--mass-loss-prescription BELCZYNSKI2010 --RSG-mass-loss NJ90 --WR-mass-loss BELCZYNSKI2010 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN \
@@ -39,5 +39,5 @@ sim_flags_dict = {
  --black-hole-kicks ZERO --kick-magnitude-sigma-CCSN-BH 0 --natal-kick-for-PPISN FALSE ",
        # New winds with Fryer remnants and no NS or BH kick
     "NewWinds_RemFryer2012_noNSBHkick": "--OB-mass-loss VINK2021 --VMS-mass-loss SABHAHIT2023 --RSG-mass-loss DECIN2023  --WR-mass-loss SANDERVINK2023 \
-  --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO ",
+  --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO --kick-magnitude-sigma-ECSN 0.0 ",
 }
