@@ -25,7 +25,8 @@ sys.path.append('./run_data')
 from definitions import sim_flags_dict
 
 home_dir = os.path.expanduser("~") 
-datar_root = home_dir + "/ceph/CompasOutput/v02.46.01/"#v02.35.02/"
+compas_v = "v02.46.01/"#v02.35.02/"
+datar_root =  f"{home_dir}/ceph/CompasOutput/{compas_v}/"
 
 ######################################
 ## PLOT setttings
@@ -264,7 +265,7 @@ def process_and_plot_sim(sim_name):
     axes[1].legend(bbox_to_anchor=(0.5, -0.2), loc='upper center', fontsize = 18, ncols = 5)
     # axes[1].legend(bbox_to_anchor=(1.01, 1), loc='upper left', fontsize = 20)
 
-    plt.savefig(f'../plots/End_Of_Evol_per_Z_{sim_name}_row.pdf', bbox_inches='tight')
+    plt.savefig(f'../plots/{compas_v}/End_Of_Evol_per_Z_{sim_name}_row.pdf', bbox_inches='tight')
     plt.show()
 
 
