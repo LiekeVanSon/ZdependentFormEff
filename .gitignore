@@ -1,5 +1,6 @@
 output
 code/run_data/BSE_grid_mass_sep_kick.txt
+code/run_data/BSE_grid_N5e6_mass_sep_kick.txt
 
 # Data from Iorio is large and available online
 YieldReview/2023_Iorio/*
