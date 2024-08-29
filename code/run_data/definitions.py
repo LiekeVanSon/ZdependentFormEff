@@ -40,4 +40,7 @@ sim_flags_dict = {
        # New winds with Fryer remnants and no NS or BH kick
     "NewWinds_RemFryer2012_noNSBHkick": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription SANDERVINK2023 \
   --remnant-mass-prescription FRYER2012 --black-hole-kicks ZERO --kick-magnitude-distribution ZERO --kick-magnitude-sigma-ECSN 0.0 ",
+        # New winds NO WR winds
+    "NewWinds_RemFryer2012_noWRwinds": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription SANDERVINK2023 \
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN --wolf-rayet-multiplier 0 ",
 }
