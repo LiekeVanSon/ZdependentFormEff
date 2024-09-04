@@ -55,4 +55,10 @@ sim_flags_dict = {
        # NO winds
     "RemFryer2012_NOwinds": " --overall-wind-mass-loss-multiplier 0 --OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription SANDERVINK2023 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN ",
+       # New winds with Fryer remnants - NO CHE
+    "NewWinds_RemFryer2012_noCHE": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription SANDERVINK2023 \
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN --chemically-homogeneous-evolution-mode NONE ",
+        # New winds with Fryer remnants Bel
+    "NewWinds_RemFryer2012_WRBELCZYNSKI2010": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription BELCZYNSKI2010 \
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN",
 }
