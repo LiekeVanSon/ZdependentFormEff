@@ -91,8 +91,8 @@ def create_first_potential_DCO_progenitors_table(datar_root, sim_name, channel_k
                     else:
                         raise Exception(f'Unknown channel key {channel_key}')
 
-                    # Add them to the list of all DCO seeds
-                    All_DCO_seeds.extend(DCO_seeds[channel_bool])
+                # Add them to the list of all DCO seeds
+                All_DCO_seeds.extend(DCO_seeds[channel_bool])
             else:
                 continue
 
