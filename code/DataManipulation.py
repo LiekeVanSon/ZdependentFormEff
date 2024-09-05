@@ -40,7 +40,7 @@ def create_first_potential_DCO_progenitors_table(datar_root, sim_name, channel_k
 
     # check if your table exists
     if os.path.isfile(datar_root+ f'/{sim_name}/{save_name_table}'):
-        print('Table already exists, loading it')
+        print('first DCO table already exists, loading it')
         potential_DCO_progenitors = pd.read_hdf(datar_root + f'/{sim_name}/{save_name_table}', key='All_DCO')
 
         return potential_DCO_progenitors
@@ -159,7 +159,7 @@ def add_RLOF_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key
 
     # check if your table exists
     if os.path.isfile(datar_root+ f'/{sim_name}/{save_name_table}'):
-        print('Table already exists, loading it')
+        print('RLOF DCO table already exists, loading it')
         potential_DCO_progenitors = pd.read_hdf(datar_root + f'/{sim_name}/{save_name_table}', key='All_DCO')
 
         return potential_DCO_progenitors
@@ -294,7 +294,7 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
 
     # check if your table exists
     if os.path.isfile(datar_root+ f'/{sim_name}/{save_name_table}'):
-        print('Table already exists, loading it')
+        print('Allinfo DCO table already exists, loading it')
         potential_DCO_progenitors = pd.read_hdf(datar_root + f'/{sim_name}/{save_name_table}', key='All_DCO')
 
         return potential_DCO_progenitors
@@ -350,8 +350,7 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
 ############################################################################
 
 def main(sim_name = 'NewWinds_RemFryer2012', channel_key = '', compas_v = "v03.01.02"):
-    """_summary_
-
+    """
     Args:
         sim_name (str): what simulation to use, e.g. 'OldWinds_RemFryer2012_noBHkick'
         channel_key (str): which channel to run the analysis on options: default = '' for all  ('_stable', '_CE', '_CHE'  )
@@ -371,26 +370,27 @@ def main(sim_name = 'NewWinds_RemFryer2012', channel_key = '', compas_v = "v03.0
     # Add SN information to the potential DCO progenitors table
     potential_DCO_progenitors = Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key)    
 
-    # Split between BBH, BHNS and NSNS progenitors (test)
-    with h5.File(datar_root+f'{sim_name}/COMPAS_Output_combinedZ.h5', 'r') as All_data:
-        DCO = All_data['BSE_Double_Compact_Objects']
-        st1 = DCO['Stellar_Type(1)'][()]
-        st2 = DCO['Stellar_Type(2)'][()]
-        dco_merger = DCO['Merges_Hubble_Time'][()]  
-        DCO_seed = DCO['SEED'][()]
-        # Now I want to add a bool that tells me if this system is ever a BBH, BHNS or BNS progenitor
-        BBH_bool = np.logical_and(st1 == 14,st2 == 14)
-        BHNS_bool = np.logical_or(np.logical_and(st1 == 13,st2 == 14),
-                                np.logical_and(st1 == 14,st2 == 13) )
-        NSNS_bool = np.logical_and(st1 == 13,st2 == 13)
-        merger_bool = dco_merger == 1
+    # # Split between BBH, BHNS and NSNS progenitors (test)
+    # with h5.File(datar_root+f'{sim_name}/COMPAS_Output_combinedZ.h5', 'r') as All_data:
+    #     DCO = All_data['BSE_Double_Compact_Objects']
+    #     st1 = DCO['Stellar_Type(1)'][()]
+    #     st2 = DCO['Stellar_Type(2)'][()]
+    #     dco_merger = DCO['Merges_Hubble_Time'][()]  
+    #     DCO_seed = DCO['SEED'][()]
+    #     # Now I want to add a bool that tells me if this system is ever a BBH, BHNS or BNS progenitor
+    #     BBH_bool = np.logical_and(st1 == 14,st2 == 14)
+    #     BHNS_bool = np.logical_or(np.logical_and(st1 == 13,st2 == 14),
+    #                             np.logical_and(st1 == 14,st2 == 13) )
+    #     NSNS_bool = np.logical_and(st1 == 13,st2 == 13)
+    #     merger_bool = dco_merger == 1
 
-        # Split our potential DCO progenitors into BBH, BHNS and NSNS progenitors
-        potential_BBH_progenitors  = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )]
-        # potential_BHNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )]
-        # potential_NSNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[NSNS_bool*merger_bool]) )]
+    #     # Split our potential DCO progenitors into BBH, BHNS and NSNS progenitors
+    #     potential_BBH_progenitors  = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )]
+    #     # potential_BHNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )]
+    #     # potential_NSNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[NSNS_bool*merger_bool]) )]
+    #  potential_BBH_progenitors', potential_BBH_progenitors.info()
 
-        print(channel_key, 'potential_BBH_progenitors', potential_BBH_progenitors.info())
+    print(f'Finished with {sim_name},  {channel_key} ')
 
 ############################################################################
 ############################################################################
