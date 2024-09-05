@@ -98,7 +98,7 @@ def create_first_potential_DCO_progenitors_table(datar_root, sim_name, channel_k
 
         # take the unique seeds (some SEEDS might make a DCO at multiple metallicities)
         All_DCO_seeds  = np.unique(All_DCO_seeds)
-        print(f'for {channel_key}, All_DCO_seeds', All_DCO_seeds, len(All_DCO_seeds) )
+
         # Save the seeds to a file
         np.savetxt(datar_root+ f'/{sim_name}/All_DCO_seeds{channel_key}.txt', All_DCO_seeds)
 
@@ -166,7 +166,7 @@ def add_RLOF_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key
 
     else:
         # Read the beginning of the potential DCO progenitors table that you made above
-        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors.h5', key='All_DCO')
+        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors{channel_key}.h5', key='All_DCO')
 
         # Load the DCO seeds
         print('Loading the DCO seeds')
@@ -301,7 +301,7 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
 
     else:
         # Read the beginning of the potential DCO progenitors table that you made above
-        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors_RLOFinfo.h5', key='All_DCO')
+        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors_RLOFinfo{channel_key}.h5', key='All_DCO')
         
         # Load the DCO seeds
         print('Loading the DCO seeds')
