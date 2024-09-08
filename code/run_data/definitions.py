@@ -48,7 +48,7 @@ sim_flags_dict = {
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN --wolf-rayet-multiplier 5 ",
        # New winds extreme WR winds
     "NewWinds_RemFryer2012_extremeWRwinds": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription SANDERVINK2023 \
- --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN --wolf-rayet-multiplier 10 ",
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN --wolf-rayet-multiplier 100 ",
        # New winds NO main sequence mass loss
     "NewWinds_RemFryer2012_noMSwinds":  "--OB-mass-loss-prescription NONE --VMS-mass-loss-prescription NONE --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription SANDERVINK2023 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN ",
