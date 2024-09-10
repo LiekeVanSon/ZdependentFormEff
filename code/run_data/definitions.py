@@ -61,4 +61,10 @@ sim_flags_dict = {
         # New winds with Fryer remnants Bel
     "NewWinds_RemFryer2012_WRBELCZYNSKI2010": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription BELCZYNSKI2010 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN",
+      # New winds but old MS winds !! NOTE the VMS prescription does not allow VINK2001, instead, up VMS_MASS_THRESHOLD >150 in constants.h
+    "NewWinds_RemFryer2012_oldMS": "--OB-mass-loss-prescription VINK2001 --VMS-mass-loss-prescription VINK2011 --RSG-mass-loss-prescription DECIN2023  --WR-mass-loss-prescription BELCZYNSKI2010 \
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN",
+      # New winds but old RSG winds
+    "NewWinds_RemFryer2012_oldRSG": "--OB-mass-loss-prescription VINK2001 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription NJ90  --WR-mass-loss-prescription BELCZYNSKI2010 \
+ --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN",
 }
