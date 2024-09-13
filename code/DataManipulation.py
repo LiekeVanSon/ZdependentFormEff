@@ -168,9 +168,8 @@ def add_RLOF_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key
         # Read the beginning of the potential DCO progenitors table that you made above
         potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors{channel_key}.h5', key='All_DCO')
 
-        # Load the DCO seeds
-        print('Loading the DCO seeds')
-        All_DCO_seeds = np.loadtxt(datar_root+ f'/{sim_name}/All_DCO_seeds{channel_key}.txt')
+        # take the unique seeds (some SEEDS might make a DCO at multiple metallicities)
+        unique_potentialDCO_seeds = np.unique(potential_DCO_progenitors['SEED'])
 
         # Open the HDF5 file for all systems at a given metallicity
         with h5.File(datar_root+ f'/{sim_name}/COMPAS_Output_combinedZ.h5', 'r') as All_data:
@@ -178,7 +177,7 @@ def add_RLOF_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key
             # Read RLOF data
             RLOF = pd.DataFrame()
             # Select only the RLOF events for systems that could potentially become a DCO
-            RLOF_mask = np.in1d(All_data['BSE_RLOF']['SEED'][()], All_DCO_seeds)
+            RLOF_mask = np.in1d(All_data['BSE_RLOF']['SEED'][()], unique_potentialDCO_seeds)
 
             ########################################################################################
             # Create the new RLOF columns in the potential DCO progenitors table
@@ -287,25 +286,21 @@ def add_RLOF_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key
 # *  HeSD 	 = 128
 
 ############################################################################
-
 def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
 
     save_name_table = f'potential_DCO_progenitors_Allinfo{channel_key}.h5'
 
     # check if your table exists
     if os.path.isfile(datar_root+ f'/{sim_name}/{save_name_table}'):
-        print('Allinfo DCO table already exists, loading it')
+        print('Table already exists, loading it')
         potential_DCO_progenitors = pd.read_hdf(datar_root + f'/{sim_name}/{save_name_table}', key='All_DCO')
-
-        return potential_DCO_progenitors
 
     else:
         # Read the beginning of the potential DCO progenitors table that you made above
-        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors_RLOFinfo{channel_key}.h5', key='All_DCO')
+        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors_RLOFinfo.h5', key='All_DCO')
         
-        # Load the DCO seeds
-        print('Loading the DCO seeds')
-        All_DCO_seeds = np.loadtxt(datar_root+ f'/{sim_name}/All_DCO_seeds{channel_key}.txt')
+        # take the unique seeds (some SEEDS might make a DCO at multiple metallicities)
+        unique_potentialDCO_seeds = np.unique(potential_DCO_progenitors['SEED'])
 
         # Open the HDF5 file for all systems at a given metallicity
         All_data = h5.File(datar_root+ f'/{sim_name}/COMPAS_Output_combinedZ.h5', 'r')
@@ -317,9 +312,11 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
             SNe = pd.DataFrame()
             
             # Select only the SN events for systems that could potentially become a DCO
-            SN_mask = np.in1d(All_data['BSE_Supernovae']['SEED'][()], All_DCO_seeds)
+            SN_mask = np.in1d(All_data['BSE_Supernovae']['SEED'][()], unique_potentialDCO_seeds)
 
-            SN_keys_of_interest = ['SEED', 'Metallicity@ZAMS(1)', 'SN_Type(SN)', 'Supernova_State']
+            SN_keys_of_interest = ['SEED', 'Metallicity@ZAMS(1)', 'SN_Type(SN)', 'Supernova_State',\
+                                'Applied_Kick_Magnitude(SN)', 'Fallback_Fraction(SN)', 'Mass_CO_Core@CO(SN)', \
+                                'Mass_Core@CO(SN)', 'Mass_He_Core@CO(SN)', 'Mass_Total@CO(SN)', 'Orb_Velocity<SN']
             for key in SN_keys_of_interest:
                 read_data   = All_data['BSE_Supernovae'][key][()]
                 SNe[key]    = read_data[SN_mask]
@@ -327,24 +324,64 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
             #Add unique seed key
             SNe['unique_Z_SEED'] = [f"{seed}_{Z:.5f}" for seed, Z in zip(SNe['SEED'], SNe['Metallicity@ZAMS(1)'])]
 
+
+        ########################################################################################
+        # Now make subselections of this SN table that we can add to the potential DCO progenitors table
         # # Star 1 is going SN
         # star1_SN = SNe[SNe['Supernova_State'] == 1]
         # # Star 2 is going SN
         # star2_SN = SNe[SNe['Supernova_State'] == 2]
-        
-        # Add the SN info to the potential DCO progenitors
-        potential_DCO_progenitors['SN_Type(1)'] = potential_DCO_progenitors['unique_Z_SEED'].map(SNe[SNe['Supernova_State'] == 1].set_index('unique_Z_SEED')['SN_Type(SN)']).fillna(-1)
-        potential_DCO_progenitors['SN_Type(2)'] = potential_DCO_progenitors['unique_Z_SEED'].map(SNe[SNe['Supernova_State'] == 2].set_index('unique_Z_SEED')['SN_Type(SN)']).fillna(-1)
+        ################################
+        # First star is going SN
+        print('Adding the SN information for star 1 going SN')
+        star1_going_SN_bool = SNe['Supernova_State'] == 1
+        SN1_table    = SNe[star1_going_SN_bool].copy()
 
-        del SNe # empty SNe to save memory
+        # Add prefix to all the keys, Except 'SEED', 'Metallicity@ZAMS(1)', 'unique_Z_SEED'
+        SN1_table.rename(columns={col: 'SN_star1_' + col for col in SN1_table.columns if col not in ['SEED', 'Metallicity@ZAMS(1)', 'unique_Z_SEED']}, inplace=True)
+
+        # Star 1 should only go SN once per unique_Z_SEED
+        s, counts = np.unique(SN1_table['unique_Z_SEED'], return_counts = True)
+        print('this should be 1', np.unique(counts))
+
+        # Merge this info with the potential_DCO_progenitors
+        potential_DCO_progenitors = potential_DCO_progenitors.merge(SN1_table, on=['SEED', 'Metallicity@ZAMS(1)', 'unique_Z_SEED'], how='left')
+        print('done with SN1')
+        del SN1_table # to save memory
+
+        ################################
+        # Second star is going SN
+        print('Adding the SN information for star 2 going SN')
+        star2_going_SN_bool = SNe['Supernova_State'] == 2
+        SN2_table    = SNe[star2_going_SN_bool].copy()
+
+        # Add prefix to all the keys, Except 'SEED', 'Metallicity@ZAMS(1)', 'unique_Z_SEED'
+        SN2_table.rename(columns={col: 'SN_star2_' + col for col in SN2_table.columns if col not in ['SEED', 'Metallicity@ZAMS(1)', 'unique_Z_SEED']}, inplace=True)
+
+        # Star 1 should only go SN once per unique_Z_SEED
+        s, counts = np.unique(SN2_table['unique_Z_SEED'], return_counts = True)
+        print('this should be 1', np.unique(counts))
+
+        # Merge this info with the potential_DCO_progenitors
+        potential_DCO_progenitors = potential_DCO_progenitors.merge(SN2_table, on=['SEED', 'Metallicity@ZAMS(1)', 'unique_Z_SEED'], how='left')
+        print('done with SN1')
+        del SN2_table # to save memory
+
+        # Add the SN info to the potential DCO progenitors
+        # potential_DCO_progenitors['SN_Type(1)'] = potential_DCO_progenitors['unique_Z_SEED'].map(SNe[SNe['Supernova_State'] == 1].set_index('unique_Z_SEED')['SN_Type(SN)']).fillna(-1)
+        # potential_DCO_progenitors['SN_Type(2)'] = potential_DCO_progenitors['unique_Z_SEED'].map(SNe[SNe['Supernova_State'] == 2].set_index('unique_Z_SEED')['SN_Type(SN)']).fillna(-1)
+
+        # del SNe # empty SNe to save memory
         gc.collect()  # Force garbage collector to release unreferenced memory
 
         #################################################################################
         # Save the dataframe
         print('Done!, Saving the potential DCO progenitors with SN info')
         potential_DCO_progenitors.to_hdf(datar_root+ f'/{sim_name}/{save_name_table}', key='All_DCO', mode='w')
-        
+
         return potential_DCO_progenitors
+
+
 
 ############################################################################
 ############################################################################
