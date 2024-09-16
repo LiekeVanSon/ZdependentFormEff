@@ -297,8 +297,8 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
 
     else:
         # Read the beginning of the potential DCO progenitors table that you made above
-        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors_RLOFinfo.h5', key='All_DCO')
-        
+        potential_DCO_progenitors = pd.read_hdf(f'{datar_root}/{sim_name}/potential_DCO_progenitors_RLOFinfo{channel_key}.h5', key='All_DCO')
+
         # take the unique seeds (some SEEDS might make a DCO at multiple metallicities)
         unique_potentialDCO_seeds = np.unique(potential_DCO_progenitors['SEED'])
 
@@ -315,7 +315,7 @@ def Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key):
             SN_mask = np.in1d(All_data['BSE_Supernovae']['SEED'][()], unique_potentialDCO_seeds)
 
             SN_keys_of_interest = ['SEED', 'Metallicity@ZAMS(1)', 'SN_Type(SN)', 'Supernova_State',\
-                                'Applied_Kick_Magnitude(SN)', 'Fallback_Fraction(SN)', 'Mass_CO_Core@CO(SN)', \
+                                'Unbound', 'Applied_Kick_Magnitude(SN)', 'Fallback_Fraction(SN)', 'Mass_CO_Core@CO(SN)', \
                                 'Mass_Core@CO(SN)', 'Mass_He_Core@CO(SN)', 'Mass_Total@CO(SN)', 'Orb_Velocity<SN']
             for key in SN_keys_of_interest:
                 read_data   = All_data['BSE_Supernovae'][key][()]
