@@ -73,4 +73,7 @@ sim_flags_dict = {
         # New winds with Fryer remnants - old RSG & old WR
     "NewWinds_RemFryer2012_oldWR_oldRSG": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription NJ90  --WR-mass-loss-prescription BELCZYNSKI2010 \
  --remnant-mass-prescription FRYER2012 --kick-magnitude-distribution MAXWELLIAN ",
+        # New winds with Fryer remnants - old RSG 
+    "NewWinds_RemMullerMandel_oldRSG": "--OB-mass-loss-prescription VINK2021 --VMS-mass-loss-prescription SABHAHIT2023 --RSG-mass-loss-prescription NJ90  --WR-mass-loss-prescription SANDERVINK2023 \
+       --remnant-mass-prescription MULLERMANDEL --kick-magnitude-distribution MULLERMANDEL ",
 }
