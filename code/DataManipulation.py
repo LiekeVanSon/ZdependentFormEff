@@ -426,10 +426,10 @@ def main(sim_name = 'NewWinds_RemFryer2012', channel_key = '', compas_v = "v03.0
         potential_DCO_progenitors['pot_BHNS_bool'] = np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )
         potential_DCO_progenitors['pot_NSNS_bool'] = np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )
 
-        potential_BBH_progenitors  = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )]
+        # potential_BBH_progenitors  = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )]
         # potential_BHNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )]
-        # potential_NSNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[NSNS_bool*merger_bool]) )]
-     potential_BBH_progenitors', potential_BBH_progenitors.info()
+        potential_NSNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[NSNS_bool*merger_bool]) )]
+        print(potential_NSNS_progenitors.keys(), 'potential_NSNS_progenitors.keys()')
 
     print(f'Finished with {sim_name},  {channel_key} ')
 
