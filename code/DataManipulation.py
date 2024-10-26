@@ -407,25 +407,29 @@ def main(sim_name = 'NewWinds_RemFryer2012', channel_key = '', compas_v = "v03.0
     # Add SN information to the potential DCO progenitors table
     potential_DCO_progenitors = Add_SN_info_to_potential_DCO_progenitors(datar_root, sim_name, channel_key)    
 
-    # # Split between BBH, BHNS and NSNS progenitors (test)
-    # with h5.File(datar_root+f'{sim_name}/COMPAS_Output_combinedZ.h5', 'r') as All_data:
-    #     DCO = All_data['BSE_Double_Compact_Objects']
-    #     st1 = DCO['Stellar_Type(1)'][()]
-    #     st2 = DCO['Stellar_Type(2)'][()]
-    #     dco_merger = DCO['Merges_Hubble_Time'][()]  
-    #     DCO_seed = DCO['SEED'][()]
-    #     # Now I want to add a bool that tells me if this system is ever a BBH, BHNS or BNS progenitor
-    #     BBH_bool = np.logical_and(st1 == 14,st2 == 14)
-    #     BHNS_bool = np.logical_or(np.logical_and(st1 == 13,st2 == 14),
-    #                             np.logical_and(st1 == 14,st2 == 13) )
-    #     NSNS_bool = np.logical_and(st1 == 13,st2 == 13)
-    #     merger_bool = dco_merger == 1
+    # Split between BBH, BHNS and NSNS progenitors (test)
+    with h5.File(datar_root+f'{sim_name}/COMPAS_Output_combinedZ.h5', 'r') as All_data:
+        DCO = All_data['BSE_Double_Compact_Objects']
+        st1 = DCO['Stellar_Type(1)'][()]
+        st2 = DCO['Stellar_Type(2)'][()]
+        dco_merger = DCO['Merges_Hubble_Time'][()]  
+        DCO_seed = DCO['SEED'][()]
+        # Now I want to add a bool that tells me if this system is ever a BBH, BHNS or BNS progenitor
+        BBH_bool = np.logical_and(st1 == 14,st2 == 14)
+        BHNS_bool = np.logical_or(np.logical_and(st1 == 13,st2 == 14),
+                                np.logical_and(st1 == 14,st2 == 13) )
+        NSNS_bool = np.logical_and(st1 == 13,st2 == 13)
+        merger_bool = dco_merger == 1
 
-    #     # Split our potential DCO progenitors into BBH, BHNS and NSNS progenitors
-    #     potential_BBH_progenitors  = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )]
-    #     # potential_BHNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )]
-    #     # potential_NSNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[NSNS_bool*merger_bool]) )]
-    #  potential_BBH_progenitors', potential_BBH_progenitors.info()
+        # Split our potential DCO progenitors into BBH, BHNS and NSNS progenitors
+        potential_DCO_progenitors['pot_BHBH_bool'] = np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )
+        potential_DCO_progenitors['pot_BHNS_bool'] = np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )
+        potential_DCO_progenitors['pot_NSNS_bool'] = np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )
+
+        potential_BBH_progenitors  = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BBH_bool*merger_bool]) )]
+        # potential_BHNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[BHNS_bool*merger_bool]) )]
+        # potential_NSNS_progenitors = potential_DCO_progenitors[np.in1d(potential_DCO_progenitors['SEED'], np.unique(DCO_seed[NSNS_bool*merger_bool]) )]
+     potential_BBH_progenitors', potential_BBH_progenitors.info()
 
     print(f'Finished with {sim_name},  {channel_key} ')
 
