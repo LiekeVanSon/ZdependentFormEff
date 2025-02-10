@@ -2,12 +2,12 @@
 
 This repository contains the code and data used in the paper:  
 **"Not just winds: why models find binary black hole formation is metallicity dependent, while binary neutron star formation is not"**  
-[*Vanson et al. 2025, ApJ, 979, 209*](https://ui.adsabs.harvard.edu/abs/2025ApJ...979..209V/abstract)  
+[*Van son et al. 2025, ApJ, 979, 209*](https://ui.adsabs.harvard.edu/abs/2025ApJ...979..209V/abstract)  
 
 ## Repository Structure
 
 - **`code/`** – Jupyter notebooks to reproduce all figures from the paper.  
-- **`run_data/`** – Scripts to reproduce the simulation data used in this work.  
+- **`code/run_data/`** – Scripts to reproduce the simulation data used in this work.  
 
 ## Reproducing the Results  
 
